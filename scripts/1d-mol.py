@@ -25,10 +25,10 @@ while nombre != nbrMyst:
     nombre = int(nombre)
  
     if nombre < nbrMyst:
-        print("Le nombre mystère est plus petit !\n")
+        print("Le nombre mystère est plus grand !\n")
  
     elif nombre > nbrMyst:
-        print("Le nombre mystère est plus grand !\n")
+        print("Le nombre mystère est plus petit !\n")
 
 
     elif str(nombre) == "q":
