@@ -2,7 +2,7 @@
 # 1d-mol
 # jeu du plus ou moins dans un fichier
 # 24/10/2018
-# Scotto Anthony et Borie Florien
+# Scotto Anthony et Borie Florian
 
 # Importe des modules
 import signal
