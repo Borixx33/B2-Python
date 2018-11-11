@@ -1,5 +1,5 @@
 #!/usr/bin/env python36
-# 1d-mol
+# 2b-mol
 # jeu du plus ou moins dans un fichier
 # 24/10/2018
 # Scotto Anthony et Borie Florian
