@@ -1,65 +1,68 @@
-#!/usr/bin/python3.6
-#2a-mol.py
-#Jeu du plus ou moins qui lit dans un fichier
-#Développé par Anthony Scotto Et Florian Borie
-#24/10/2018
+#!/usr/bin/env python36
+# 2a-mol
+# Jeu du plus ou moins dans un fichier
+# 23/10/2018
+# Scotto Anthony et Borie Florien
 
-import os
-from random import randrange
-
+#Importe des modules
 import signal
-from time import sleep
+import random
+import re
 
-def youcant(sig, frame):
-    print('You cant CTRL+C on me !')
+# fonction anti ctrlC
+def stop_ctrlC(sig, frame):
+   fin()
 
-signal.signal(signal.SIGINT, youcant) 
+
+signal.signal(signal.SIGINT, stop_ctrlC)
+# on créé la fonction de fin
 
 
-nombre = 0
- 
-print("LE JEU DU PLUS OU MOINS \n")
- 
-nbrMyst = randrange(1, 100)
-nbrcoup = 1
-#ouverture fichier ecriture et lecture
-f = open('2a-molB.txt', 'w',)
-f.write("Bienvenue \n")
-f.close()
+def fin():
+    print("\b Au revoir")
+    exit()
 
-while nombre != nbrMyst:
-    nbrcoup += 1
-    print("Trouve le nombre mystère")
-    print(nbrMyst)
-    nombre = input()
 
-    f = open('2a-molB.txt', 'a',)
-    f.write(str(nombre))
-    f.close()
-    f = open('2a-molB.txt', 'r',)
-    x=f.readlines()[-1]
+# la fonction pour écrire dans un fichier
+def write_file(msg):
+    file = open("plusoumoins.txt", "w")
+    file.write(msg)
+    file.close()
 
- 
-    if int(x) < nbrMyst:
-        print("Le nombre mystère est plus grand !\n")
-	f.open('2a-molB.txt', 'a',)
-	f.write("Le nombre mystère est ")
-	f.close()
- 
-    elif int(x) > nbrMyst:
-        print("Le nombre mystère est plus petit !\n")
-	f.open('2a-molB.txt','a',)
-	f.write("Le nombre mystère est ")
-	f.close()
+# on créé la fonction de lecture du fichier
+def read_file():
+    file = open("plusoumoins.txt", "r")
+    msg = file.read()
+    file.close()
+    return msg
 
-    elif str(x) == "q":
-        break
- 
-    else:
-        print("Félicitations, vous avez trouvé le nombre mystère !!!")
-        print ("Qui étais", int(nbrMyst))
-        print ("En", int(nbrcoup), "coups")
-        f = open('2a-molB.txt', 'w',)
-        f.write("")
-        f.close()
-        break
+
+#Variables du regex; du nbr mytere et de la fin
+regx = re.compile('^[0-9]+')
+nbr_myst = random.randint(0, 100)
+end = False
+
+
+print("Bienvenue dans le jeu du plus ou moins")
+write_file("Veuillez entrez un chiffre entre 0 et 100")
+
+# mise en place d'une boucle
+while end is False:
+    # Lecture du fichier et affectation dans la variable saisie
+    saisie = read_file()
+    # On vérifie que la variable saisie est un nombre
+    if regx.match(saisie):
+        saisie = int(saisie)
+        
+#comparaison de la saisie avec le nombre mystere
+        if saisie > nbr_myst:
+            write_file("Trop grand !")
+
+        elif saisie < nbr_myst:
+            write_file("Trop petit !")
+        # Fin du jeu et fin de la boucle
+
+        else:
+            write_file("You win")
+            end = True
+            fin()
